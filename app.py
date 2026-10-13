@@ -147,7 +147,7 @@ with col1:
 with col2:
     graduated = st.selectbox("Graduated?", options=['Yes', 'No', 'Unknown'])
     profession = st.selectbox("Profession", options=['Artist', 'Healthcare', 'Engineer', 'Lawyer', 'Entertainment', 'Artist', 'Executive', 'Doctor', 'Homemaker', 'Marketing', 'Unknown'])
-    work_exp = st.number_input("Work Experience (Years)", min_value=0, max_value=25, value=3)
+    work_exp = st.number_input("Work Experience (Years)", min_value=0, max_value=40, value=3)
 
 with col3:
     family_size = st.number_input("Family Size", min_value=1, max_value=10, value=2)
