@@ -152,52 +152,57 @@ with col2:
 with col3:
     family_size = st.number_input("Family Size", min_value=1, max_value=10, value=2)
 
+
 if st.button("🚀 Predict Spending Score", type="primary"):
-    # Build single customer input DataFrame
-    input_df = pd.DataFrame([{
-        'Gender': gender,
-        'Ever_Married': ever_married,
-        'Age': age,
-        'Graduated': graduated,
-        'Profession': profession,
-        'Work_Experience': work_exp,
-        'Family_Size': family_size
-    }])
+    # Validate work experience logic relative to age
+    if work_exp <= age - 16:
+        # Build single customer input DataFrame
+        input_df = pd.DataFrame([{
+            'Gender': gender,
+            'Ever_Married': ever_married,
+            'Age': age,
+            'Graduated': graduated,
+            'Profession': profession,
+            'Work_Experience': work_exp,
+            'Family_Size': family_size
+        }])
 
-    # Apply exact feature engineering steps
-    input_df['Experience_Age_Ratio'] = input_df['Work_Experience'] / input_df['Age']
-    input_df['Is_Married'] = (input_df['Ever_Married'] == 'Yes').astype(int)
-    input_df['Age_Married_Interact'] = input_df['Age'] * input_df['Is_Married']
-    input_df['Age_Group'] = pd.cut(input_df['Age'], bins=[0, 25, 40, 60, 100], labels=['Young', 'Adult', 'Mid_Age', 'Senior'])
-    input_df['Career_Stage'] = pd.cut(input_df['Work_Experience'], bins=[-1, 1, 5, 10, 50], labels=['Junior', 'Mid', 'Senior', 'Veteran'])
+        # Apply exact feature engineering steps
+        input_df['Experience_Age_Ratio'] = input_df['Work_Experience'] / input_df['Age']
+        input_df['Is_Married'] = (input_df['Ever_Married'] == 'Yes').astype(int)
+        input_df['Age_Married_Interact'] = input_df['Age'] * input_df['Is_Married']
+        input_df['Age_Group'] = pd.cut(input_df['Age'], bins=[0, 25, 40, 60, 100], labels=['Young', 'Adult', 'Mid_Age', 'Senior'])
+        input_df['Career_Stage'] = pd.cut(input_df['Work_Experience'], bins=[-1, 1, 5, 10, 50], labels=['Junior', 'Mid', 'Senior', 'Veteran'])
 
-    input_df['Graduated_Int'] = (input_df['Graduated'] == 'Yes').astype(int)
-    input_df['Age_Graduated_Interact'] = input_df['Age'] * input_df['Graduated_Int']
-    input_df['Married_Profession'] = input_df['Ever_Married'].astype(str) + "_" + input_df['Profession'].astype(str)
-    input_df['Age_Per_Family_Member'] = input_df['Age'] / (input_df['Family_Size'] + 1)
+        input_df['Graduated_Int'] = (input_df['Graduated'] == 'Yes').astype(int)
+        input_df['Age_Graduated_Interact'] = input_df['Age'] * input_df['Graduated_Int']
+        input_df['Married_Profession'] = input_df['Ever_Married'].astype(str) + "_" + input_df['Profession'].astype(str)
+        input_df['Age_Per_Family_Member'] = input_df['Age'] / (input_df['Family_Size'] + 1)
 
-    # Categorical One-Hot Encoding
-    cat_cols_input = input_df.select_dtypes(include=['object', 'category']).columns.tolist()
-    input_encoded = pd.get_dummies(input_df, columns=cat_cols_input, drop_first=True)
+        # Categorical One-Hot Encoding
+        cat_cols_input = input_df.select_dtypes(include=['object', 'category']).columns.tolist()
+        input_encoded = pd.get_dummies(input_df, columns=cat_cols_input, drop_first=True)
 
-    # Schema Alignment with training set
-    input_aligned = pd.DataFrame(0, index=[0], columns=feature_columns)
-    for col in input_encoded.columns:
-        if col in input_aligned.columns:
-            input_aligned[col] = input_encoded[col]
+        # Schema Alignment with training set
+        input_aligned = pd.DataFrame(0, index=[0], columns=feature_columns)
+        for col in input_encoded.columns:
+            if col in input_aligned.columns:
+                input_aligned[col] = input_encoded[col]
 
-    # Scaling numerical features
-    input_aligned[num_cols] = scaler.transform(input_aligned[num_cols])
+        # Scaling numerical features
+        input_aligned[num_cols] = scaler.transform(input_aligned[num_cols])
 
-    # Model Prediction
-    pred_class_idx = voting_hard_model.predict(input_aligned)[0]
-    pred_label = target_encoder.inverse_transform([pred_class_idx])[0]
+        # Model Prediction
+        pred_class_idx = voting_hard_model.predict(input_aligned)[0]
+        pred_label = target_encoder.inverse_transform([pred_class_idx])[0]
 
-    st.markdown("---")
-    st.subheader("Prediction Result")
-    if pred_label == "High":
-        st.success(f"Predicted Spending Score Tier: **{pred_label}** 💎")
-    elif pred_label == "Average":
-        st.info(f"Predicted Spending Score Tier: **{pred_label}** 📈")
+        st.markdown("---")
+        st.subheader("Prediction Result")
+        if pred_label == "High":
+            st.success(f"Predicted Spending Score Tier: **{pred_label}** 💎")
+        elif pred_label == "Average":
+            st.info(f"Predicted Spending Score Tier: **{pred_label}** 📈")
+        else:
+            st.warning(f"Predicted Spending Score Tier: **{pred_label}** 🏷️")
     else:
-        st.warning(f"Predicted Spending Score Tier: **{pred_label}** 🏷️")
+        st.error("⚠️ Work experience cannot exceed (Age - 16). Please input right numbers!")
