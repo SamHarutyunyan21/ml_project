@@ -132,8 +132,6 @@ def run_model_pipeline():
 # =========================================================
 # STREAMLIT USER INTERFACE
 # # =========================================================
-# st.sidebar.title("Navigation")
-# st.sidebar.markdown(f"**Model Accuracy:** `{acc_hard * 100:.2f}%`")
 
 st.subheader("Input Customer Details for Live Prediction")
 
