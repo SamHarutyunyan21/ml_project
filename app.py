@@ -167,7 +167,8 @@ if st.button("🚀 Predict Spending Score", type="primary"):
             'Work_Experience': work_exp,
             'Family_Size': family_size
         }])
-        
+
+    
     # Apply exact feature engineering steps
     input_df['Experience_Age_Ratio'] = input_df['Work_Experience'] / input_df['Age']
     input_df['Is_Married'] = (input_df['Ever_Married'] == 'Yes').astype(int)
