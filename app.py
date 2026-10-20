@@ -152,7 +152,7 @@ with col3:
 
 if st.button("🚀 Predict Spending Score", type="primary"):
     # Check if any field still has the default "Select option"
-    if "Select option" in [gender, ever_married, graduated, profession]:
+    if gender == "Select option" or ever_married == "Select option" or graduated == "Select option" or profession == "Select option":
         st.warning("⚠️ Please select valid options for all dropdown fields before predicting!")
     elif work_exp > age - 16:
         st.error("⚠️ Work experience cannot exceed (Age - 16). Please input right numbers!")
