@@ -153,8 +153,10 @@ if st.button("🚀 Predict Spending Score", type="primary"):
     # Check if any field still has the default "Select option"
     if None in [gender, ever_married, graduated, profession]:
         st.warning("⚠️ Please select valid options for all dropdown fields before predicting!")
+        st.stop()
     elif work_exp > age - 16:
         st.error("⚠️ Work experience cannot exceed (Age - 16). Please input right numbers!")
+        st.stop()
     else:
         # Build single customer input DataFrame
         input_df = pd.DataFrame([{
