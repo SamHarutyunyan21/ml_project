@@ -138,13 +138,12 @@ st.subheader("Input Customer Details for Live Prediction")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    gender = st.selectbox("Gender", ['Select Option', 'Male', 'Female'])
+    gender = st.selectbox("Gender", ["Male", "Female"], index=None, placeholder="Select option")
     age = st.slider("Age", min_value=18, max_value=90, value=35)
-    ever_married = st.selectbox("Ever Married?", ['Select Option', 'Yes', 'No', 'Unknown'])
-
+    ever_married = st.selectbox("Ever Married", ["Yes", "No"], index=None, placeholder="Select option")
 with col2:
-    graduated = st.selectbox("Graduated?", ['Select Option', 'Yes', 'No', 'Unknown'])
-    profession = st.selectbox("Profession", ['Select Option', 'Artist', 'Healthcare', 'Engineer', 'Lawyer', 'Entertainment', 'Artist', 'Executive', 'Doctor', 'Homemaker', 'Marketing', 'Unknown'])
+    graduated = st.selectbox("Graduated", ["Yes", "No"], index=None, placeholder="Select option")
+    profession = st.selectbox("Profession", ["Healthcare", "Engineer", "Executive", "Artist", "Doctor", "Lawyer", "Entertainment", "Homemaker", "Marketing"], index=None, placeholder="Select option")
     work_exp = st.number_input("Work Experience (Years)", min_value=0, max_value=55, value=3)
 
 with col3:
