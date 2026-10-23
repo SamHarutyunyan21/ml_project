@@ -38,13 +38,13 @@ This project streams customer data from Hugging Face, performs automated cleanin
 
 ```text
 .
-├── EDA.ipynb        # Exploratory Data Analysis, missing value evaluation, and distribution plots[cite: 7, 10]
-├── models.ipynb     # Model experimentation, baseline comparisons, and hyperparameter testing[cite: 7]
-├── main.ipynb       # End-to-end execution pipeline (Ingestion -> Preprocessing -> Ensembling -> Inference)[cite: 7, 10]
-├── app.py           # Streamlit web application for interactive real-time predictions[cite: 8]
-├── requirements.txt # Project dependencies and pinned library versions[cite: 7, 8]
-├── Dockerfile       # Containerization instructions for deployment[cite: 9]
-└── README.md        # Project documentation[cite: 7]
+├── EDA.ipynb        # Exploratory Data Analysis, missing value evaluation, and distribution plots
+├── models.ipynb     # Model experimentation, baseline comparisons, and hyperparameter testing
+├── main.ipynb       # End-to-end execution pipeline (Ingestion -> Preprocessing -> Ensembling -> Inference)
+├── app.py           # Streamlit web application for interactive real-time predictions
+├── requirements.txt # Project dependencies and pinned library versions
+├── Dockerfile       # Containerization instructions for deployment
+└── README.md        # Project documentation
 
 ```
 
