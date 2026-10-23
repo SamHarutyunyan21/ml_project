@@ -140,7 +140,7 @@ col1, col2, col3 = st.columns(3)
 with col1:
     gender = st.selectbox("Gender", ["Male", "Female"], index=None, placeholder="Select option")
     age = st.slider("Age", min_value=18, max_value=90, value=35)
-    ever_married = st.selectbox("Ever Married", ["Yes", "No"], index=None, placeholder="Select option")
+    ever_married = st.selectbox("Married", ["Yes", "No"], index=None, placeholder="Select option")
 with col2:
     graduated = st.selectbox("Graduated", ["Yes", "No"], index=None, placeholder="Select option")
     profession = st.selectbox("Profession", ["Healthcare", "Engineer", "Executive", "Artist", "Doctor", "Lawyer", "Entertainment", "Homemaker", "Marketing"], index=None, placeholder="Select option")
